@@ -195,7 +195,7 @@ const handleFile = async (file) => {
 
   <!-- Footer -->
   <footer class="app-footer">
-    Created for <strong>Creepy Studio</strong> by <strong>Patrik Glomb</strong> &middot; Vue 3 + PHP
+    Created for <a href="https://creepy.cz/" target="_blank" rel="noopener"><strong>Creepy Studio</strong></a> by <a href="https://github.com/zf-moth" target="_blank" rel="noopener"><strong>Patrik Glomb</strong></a> &middot; Vue 3 + PHP
   </footer>
 </template>
 

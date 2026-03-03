@@ -278,11 +278,24 @@ p.subtitle {
 
 .app-footer strong {
   color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.app-footer a {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.app-footer a:hover,
+.app-footer a:hover strong {
+  color: var(--accent);
 }
 
 /* Responsive breakpoints */
 @media (max-width: 640px) {
   .glass-panel {
+    width: calc(100% - 2rem);
     margin: 1rem;
     padding: 2rem 1.25rem;
     border-radius: 16px;
@@ -310,12 +323,12 @@ p.subtitle {
   }
 
   .blob-1 {
-    width: 70vw;
-    height: 70vw;
+    width: 60vw;
+    height: 60vw;
   }
 
   .blob-2 {
-    width: 60vw;
-    height: 60vw;
+    width: 50vw;
+    height: 50vw;
   }
 }
