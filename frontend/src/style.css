@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --primary-glow: rgba(56, 189, 248, 0.4);
+  --secondary-glow: rgba(139, 92, 246, 0.4);
+  --accent: #38bdf8;
+  --error: #fb7185;
+  --success: #34d399;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animated Gradient Background */
+.bg-blobs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  filter: blur(80px);
+  border-radius: 50%;
+  animation: float 10s ease-in-out infinite alternate;
+}
+
+.blob-1 {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background-color: var(--secondary-glow);
+  animation-delay: 0s;
+}
+
+.blob-2 {
+  bottom: -10%;
+  right: -10%;
+  width: 40vw;
+  height: 40vw;
+  background-color: var(--primary-glow);
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(50px, -50px) scale(1.1);
+  }
+}
+
+/* Glassmorphism Container */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel:hover {
+  transform: translateY(-5px);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff, #94a3b8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p.subtitle {
+  color: #94a3b8;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+}
+
+/* Dropzone */
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.drop-zone::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.drop-zone:hover,
+.drop-zone.active {
+  border-color: var(--accent);
+  transform: scale(1.02);
+}
+
+.drop-zone.active::before {
+  opacity: 0.05;
+}
+
+.drop-zone-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+  transition: transform 0.3s ease;
+}
+
+.drop-zone:hover .drop-zone-icon {
+  transform: translateY(-10px);
+  opacity: 1;
+}
+
+.drop-zone-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.drop-zone-text span {
+  color: var(--accent);
+}
+
+.drop-zone-subtext {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+/* Selected file name indicator */
+.selected-file {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--accent);
+  opacity: 0.9;
+  animation: popIn 0.3s ease backwards;
+}
+
+/* Status Messages */
+.status-message {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  animation: popIn 0.3s ease backwards;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.status-error {
+  background: rgba(251, 113, 133, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(251, 113, 133, 0.2);
+}
+
+.status-success {
+  background: rgba(52, 211, 153, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.status-loading {
+  color: var(--accent);
+}
+
+/* Dismiss button inside status messages */
+.dismiss-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  padding: 0 0.25rem;
+  flex-shrink: 0;
+}
+
+.dismiss-btn:hover {
+  opacity: 1;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loader */
+.loader {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer */
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: #475569;
+  letter-spacing: 0.02em;
+}
+
+.app-footer strong {
+  color: #64748b;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 640px) {
+  .glass-panel {
+    margin: 1rem;
+    padding: 2rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  p.subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .drop-zone {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .drop-zone-icon {
+    font-size: 2.5rem;
+  }
+
+  .drop-zone-text {
+    font-size: 1rem;
+  }
+
+  .blob-1 {
+    width: 70vw;
+    height: 70vw;
+  }
+
+  .blob-2 {
+    width: 60vw;
+    height: 60vw;
+  }
+}
