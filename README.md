@@ -31,7 +31,7 @@ cd frontend
 npm install
 npm run dev
 ```
-The app will run on `http://localhost:5173`. The Vite config proxies `/api` requests to the local PHP server (see `vite.config.js`).
+The app will run on `http://localhost:5173/work-assigment/`. The Vite config proxies `/api` requests to the local PHP server (see `vite.config.js`).
 
 ## Time Spent
 
