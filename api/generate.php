@@ -69,7 +69,7 @@ function getNextBusinessDay(\DateTime $date): \DateTime {
         if ($year !== $cachedYear) {
             $cachedYear = $year;
             $easterDate = new \DateTime("$year-03-21");
-            $easterDate->modify('+' . easter_days($year) . ' days');
+            $easterDate->modify('+' . easter_days_pure($year) . ' days');
 
             $goodFriday = clone $easterDate;
             $goodFriday->modify('-2 days');
@@ -90,6 +90,37 @@ function getNextBusinessDay(\DateTime $date): \DateTime {
         }
         $d->modify('+1 day');
     }
+}
+
+/**
+ * Pure PHP replacement for easter_days(). 
+ * Had issues with the calendar extension on Railway deployment.
+ * Uses the Anonymous Gregorian algorithm.
+ * Essentially the same as the easter_days() function, but without the calendar extension.
+ * (This is why I don't like PHP)
+ * 
+ * @param int $year  The year to calculate Easter for
+ * @return int       The number of days between March 21st and Easter Sunday
+ */
+function easter_days_pure(int $year): int {
+    $a = $year % 19;
+    $b = intdiv($year, 100);
+    $c = $year % 100;
+    $d = intdiv($b, 4);
+    $e = $b % 4;
+    $f = intdiv($b + 8, 25);
+    $g = intdiv($b - $f + 1, 3);
+    $h = (19 * $a + $b - $d - $g + 15) % 30;
+    $i = intdiv($c, 4);
+    $k = $c % 4;
+    $l = (32 + 2 * $e + 2 * $i - $h - $k) % 7;
+    $m = intdiv($a + 11 * $h + 22 * $l, 451);
+    $month = intdiv($h + $l - 7 * $m + 114, 31);
+    $day = (($h + $l - 7 * $m + 114) % 31) + 1;
+
+    $easter = new \DateTime("$year-$month-$day");
+    $march21 = new \DateTime("$year-03-21");
+    return (int)$march21->diff($easter)->days;
 }
 
 /**
@@ -205,7 +236,7 @@ $refundedOrders = array_filter($data, fn($o) => ($o['status'] ?? '') === 'refund
 if (count($refundedOrders) > 400) {
     http_response_code(400);
     echo json_encode([
-        'error' => 'MojeBanka Business limit exceeded: maximum 400 payments per day.'
+        'error' => 'MojeBanka Business limit exceeded: maximum 400 orders per day.'
     ]);
     exit;
 }
