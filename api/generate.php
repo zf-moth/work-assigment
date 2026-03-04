@@ -197,11 +197,20 @@ $totalSum = 0;
 $seqNo = 1;
 const MAX_SEQ_NO = 99999; // 5-char field width limit
 
-foreach ($data as $order) {
-    // Only process refunded orders as for assignment task
-    if ($order['status'] !== 'refunded') {
-        continue;
-    }
+// Pre-filter refunded orders
+$refundedOrders = array_filter($data, fn($o) => ($o['status'] ?? '') === 'refunded');
+
+// MojeBanka Business limit: max 400 payments per batch file
+// (KB BEST spec – "The number of orders that Direct Banking can process")
+if (count($refundedOrders) > 400) {
+    http_response_code(400);
+    echo json_encode([
+        'error' => 'MojeBanka Business limit exceeded: maximum 400 payments per day.'
+    ]);
+    exit;
+}
+
+foreach ($refundedOrders as $order) {
 
     $orderId = $order['order_id'] ?? null;
     if (!$orderId) {
