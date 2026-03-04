@@ -9,10 +9,11 @@ The task was to create a **PHP script** that generates a **BEST format** file fo
 - **Frontend**: Vue 3 + Vite - communicates with the back-end via Fetch API through a Vite dev-server proxy.
 - **Backend (API)**: Plain PHP (`api/generate.php`) - Receives JSON orders, filters refunded ones, and outputs a valid `.best` file.
 
-### Notable Features (i.e. I was bored)
+### Notable merits (i.e. I was bored)
 
-- **Business Day Logic**: Automatically skips weekends and Czech public holidays (including moveable Easter dates via `easter_days` function).
+- **Business Day Logic**: Automatically skips weekends and Czech public holidays (including moveable Easter dates via `easter_days_pure` function).
 - **Encoding**: Output is strictly `Windows-1250` with `CRLF` line endings, as required by the BEST format.
+- **Deployment**: The API is deployed to Railway, and the frontend is deployed to GitHub Pages.
 
 ## How to Run
 
@@ -38,10 +39,10 @@ The app will run on `http://localhost:5173/work-assigment/`. The Vite config pro
 | Phase | Time |
 |-------|------|
 | Understanding the assignment & gathering BEST documentation | ~1.5 h |
-| Backend (PHP) development | ~3 h |
+| Backend (PHP) development | ~3.5 h |
 | Frontend (Vue.js + CSS) development | ~1 h |
 | Documentation & polish | ~1 h |
-| **Total** | **~6.5 hours** |
+| **Total** | **~7 hours** |
 
 ### Notes
 ```markdown
