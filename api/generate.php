@@ -229,7 +229,7 @@ $seqNo = 1;
 const MAX_SEQ_NO = 99999; // 5-char field width limit
 
 // Pre-filter refunded orders
-$refundedOrders = array_filter($data, fn($o) => ($o['status'] ?? '') === 'refunded');
+$refundedOrders = array_filter($data, fn($o) => is_array($o) && ($o['status'] ?? '') === 'refunded');
 
 // MojeBanka Business limit: max 400 payments per batch file
 // (KB BEST spec – "The number of orders that Direct Banking can process")
@@ -263,13 +263,13 @@ foreach ($refundedOrders as $order) {
 
     if (isset($order['products']) && is_array($order['products'])) {
         foreach ($order['products'] as $product) {
-            $totalAmountCents += (int)round(($product['price'] * $product['quantity']) * 100);
+            $totalAmountCents += (int)round((($product['price'] ?? 0) * ($product['quantity'] ?? 0)) * 100);
         }
     }
 
     if (isset($order['fees']) && is_array($order['fees'])) {
         foreach ($order['fees'] as $fee) {
-            $totalAmountCents += (int)round($fee['price'] * 100);
+            $totalAmountCents += (int)round(($fee['price'] ?? 0) * 100);
         }
     }
 
