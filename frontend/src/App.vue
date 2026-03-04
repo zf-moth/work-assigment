@@ -96,8 +96,9 @@ const handleFile = async (file) => {
       throw new Error('Neplatný obsah JSON souboru.')
     }
 
+    const apiUrl = import.meta.env.VITE_API_URL || '/api'
     // Send the parsed orders to the PHP BEST generator
-    const response = await fetch('/api/generate.php', {
+    const response = await fetch(`${apiUrl}/generate.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
